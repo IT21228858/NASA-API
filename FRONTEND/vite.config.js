@@ -6,7 +6,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api' :{
-        target: 'http://localhost:3000',
+        target: 'https://nasa-api-dulhan.onrender.com',
         secure: false,
 
       },

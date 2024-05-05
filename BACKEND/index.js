@@ -1,3 +1,4 @@
+import cors from 'cors'; //  import cors
 import express from 'express';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
@@ -19,6 +20,11 @@ mongoose.connect(
 
 });
 const app = express();
+// Allow requests from specific origin(s)
+//backend will not approve requests from frontend without this 
+app.use(cors({
+    origin: 'https://nasa-api-app-dulhan.netlify.app'
+  }));
 app.use(express.json());
 app.use(cookieParser());
 app.listen(3000, () =>{
