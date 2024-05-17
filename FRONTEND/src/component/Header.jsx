@@ -18,15 +18,15 @@ export default function Header() {
       const res = await fetch("/api/user/signout", {
         method: "POST",
       });
-      const data = await res.json();
       if (!res.ok) {
-        console.log(data.message);
+        const data = await res.json();
+        console.error(data.message);
       } else {
         dispatch(signoutSuccess());
         navigate("/sign-in");
       }
     } catch (error) {
-      console.log(error.message);
+      console.error(error.message);
     }
   };
 
@@ -37,8 +37,19 @@ export default function Header() {
           <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
             <button className="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
               <span className="sr-only">Open main menu</span>
-              <svg className="block h-6 w-6" aria-hidden="true" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
+              <svg
+                className="block h-6 w-6"
+                aria-hidden="true"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M4 6h16M4 12h16M4 18h16"
+                />
               </svg>
             </button>
           </div>
@@ -51,7 +62,7 @@ export default function Header() {
               </span>
             </div>
           </div>
-          
+
           <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
             <Button className="w-12 h-10 hidden sm:inline" color="gray" pill>
               <FaMoon />
@@ -61,7 +72,12 @@ export default function Header() {
               className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
             >
               <span className="sr-only">View notifications</span>
-              <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg
+                className="h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -78,7 +94,7 @@ export default function Header() {
                 label={<Avatar alt="user" img={Userlogo} rounded />}
                 className="dropdown-custom"
               >
-               <div className="max-w-md w-full bg-white rounded-lg shadow-md overflow-hidden">
+                <div className="max-w-md w-full bg-white rounded-lg shadow-md overflow-hidden">
                   {/* Header */}
                   <div className="flex items-center pr-20 pl-8 py-4 px-8">
                     {/* User Image */}
@@ -92,9 +108,9 @@ export default function Header() {
                       <span className="block font-semibold text-lg text-gray-800 mb-1">
                         {currentUser.username}
                       </span>
-                      {/* <span className="block text-sm text-gray-600">
+                      <span className="block text-sm text-gray-600">
                         {currentUser.email}
-                      </span> */}
+                      </span>
                     </div>
                   </div>
                   {/* Divider */}
@@ -102,7 +118,7 @@ export default function Header() {
                   {/* Items */}
                   <div className="p-4">
                     <Dropdown.Item
-                      className="text-black hover:text-white hover:bg-gradient-to-br from-blue-500 to-purple-500"
+                      className="text-black hover:text-white hover:bg-gradient-to-br from-blue-500 to-purple-500 py-2 px-4 rounded-md"
                       onClick={handleSignout}
                     >
                       Sign out
@@ -137,8 +153,6 @@ export default function Header() {
           </div>
         </div>
       </div>
-
-      
     </nav>
   );
 }
