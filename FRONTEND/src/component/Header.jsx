@@ -23,7 +23,7 @@ export default function Header() {
         console.log(data.message);
       } else {
         dispatch(signoutSuccess());
-        navigate("/sign-up");
+        navigate("/sign-in");
       }
     } catch (error) {
       console.log(error.message);
@@ -49,7 +49,34 @@ export default function Header() {
                 <Link to="/">SPACE DISCOVERY HUB</Link>
               </span>
             </div>
-            
+            <div className="hidden sm:ml-6 sm:block">
+              <div className="flex space-x-4">
+                <Link
+                  to="/"
+                  className="bg-gray-900 text-white rounded-md px-3 py-2 text-sm font-medium"
+                >
+                  Home
+                </Link>
+                <Link
+                  to="/discover"
+                  className="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium"
+                >
+                  Discover
+                </Link>
+                <Link
+                  to="/projects"
+                  className="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium"
+                >
+                  Projects
+                </Link>
+                <Link
+                  to="/contact"
+                  className="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium"
+                >
+                  Contact
+                </Link>
+              </div>
+            </div>
           </div>
           <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
             <Button className="w-12 h-10 hidden sm:inline" color="gray" pill>
