@@ -15,7 +15,7 @@ export default function Header() {
 
   const handleSignout = async () => {
     try {
-      const res = await fetch("/api/user/signout", {
+      const res = await fetch("https://nasa-api-dulhan.onrender.com/api/user/signout", {
         method: "POST",
       });
       if (!res.ok) {
