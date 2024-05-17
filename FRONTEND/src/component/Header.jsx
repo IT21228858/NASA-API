@@ -42,6 +42,7 @@ export default function Header() {
               </svg>
             </button>
           </div>
+
           <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
             <div className="flex flex-shrink-0 items-center">
               <img className="h-8 w-auto" src={nasaLogo} alt="NASA" />
@@ -49,35 +50,8 @@ export default function Header() {
                 <Link to="/">SPACE DISCOVERY HUB</Link>
               </span>
             </div>
-            <div className="hidden sm:ml-6 sm:block">
-              <div className="flex space-x-4">
-                <Link
-                  to="/"
-                  className="bg-gray-900 text-white rounded-md px-3 py-2 text-sm font-medium"
-                >
-                  Home
-                </Link>
-                <Link
-                  to="/discover"
-                  className="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium"
-                >
-                  Discover
-                </Link>
-                <Link
-                  to="/projects"
-                  className="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium"
-                >
-                  Projects
-                </Link>
-                <Link
-                  to="/contact"
-                  className="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium"
-                >
-                  Contact
-                </Link>
-              </div>
-            </div>
           </div>
+          
           <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
             <Button className="w-12 h-10 hidden sm:inline" color="gray" pill>
               <FaMoon />
@@ -105,39 +79,37 @@ export default function Header() {
                 className="dropdown-custom"
               >
                <div className="max-w-md w-full bg-white rounded-lg shadow-md overflow-hidden">
-  {/* Header */}
-  <div className="flex items-center pr-20 pl-8 py-4 px-8">
-    {/* User Image */}
-    <img
-      src={Userlogo}
-      alt="User Profile"
-      className="w-12 h-12 rounded-full mr-4"
-    />
-    {/* User Info */}
-    <div>
-      <span className="block font-semibold text-lg text-gray-800 mb-1">
-        {currentUser.username}
-      </span>
-      {/* <span className="block text-sm text-gray-600">
-        {currentUser.email}
-      </span> */}
-    </div>
-  </div>
-  {/* Divider */}
-  <div className="border-b border-gray-300"></div>
-  {/* Items */}
-  <div className="p-4">
-    <Dropdown.Item
-      className="text-black hover:text-white hover:bg-gradient-to-br from-blue-500 to-purple-500"
-      onClick={handleSignout}
-    >
-      Sign out
-    </Dropdown.Item>
-    {/* Add more dropdown items as needed */}
-  </div>
-</div>
-
-
+                  {/* Header */}
+                  <div className="flex items-center pr-20 pl-8 py-4 px-8">
+                    {/* User Image */}
+                    <img
+                      src={Userlogo}
+                      alt="User Profile"
+                      className="w-12 h-12 rounded-full mr-4"
+                    />
+                    {/* User Info */}
+                    <div>
+                      <span className="block font-semibold text-lg text-gray-800 mb-1">
+                        {currentUser.username}
+                      </span>
+                      {/* <span className="block text-sm text-gray-600">
+                        {currentUser.email}
+                      </span> */}
+                    </div>
+                  </div>
+                  {/* Divider */}
+                  <div className="border-b border-gray-300"></div>
+                  {/* Items */}
+                  <div className="p-4">
+                    <Dropdown.Item
+                      className="text-black hover:text-white hover:bg-gradient-to-br from-blue-500 to-purple-500"
+                      onClick={handleSignout}
+                    >
+                      Sign out
+                    </Dropdown.Item>
+                    {/* Add more dropdown items as needed */}
+                  </div>
+                </div>
               </Dropdown>
             ) : (
               <>
