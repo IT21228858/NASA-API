@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Breadcrumb } from "flowbite-react";
-import { Spinner } from "flowbite-react";
+import { Breadcrumb, Spinner } from "flowbite-react";
 import { HiHome } from "react-icons/hi";
 import { motion } from "framer-motion";
 
@@ -39,21 +38,28 @@ export default function AstronomyDay() {
     e.preventDefault();
     const NASA_KEY = import.meta.env.VITE_NASA_API_KEY;
     const url = `https://api.nasa.gov/planetary/apod?api_key=${NASA_KEY}&date=${date}`;
-    fetchData(url);
+    await fetchData(url);
+    setShowForms(false);
   };
 
   const handleDateRangeSubmit = async (e) => {
     e.preventDefault();
     const NASA_KEY = import.meta.env.VITE_NASA_API_KEY;
     const url = `https://api.nasa.gov/planetary/apod?api_key=${NASA_KEY}&start_date=${startDate}&end_date=${endDate}`;
-    fetchData(url);
+    await fetchData(url);
+    setShowForms(false);
   };
 
   const handleCountSubmit = async (e) => {
     e.preventDefault();
     const NASA_KEY = import.meta.env.VITE_NASA_API_KEY;
     const url = `https://api.nasa.gov/planetary/apod?api_key=${NASA_KEY}&count=${count}`;
-    fetchData(url);
+    await fetchData(url);
+    setShowForms(false);
+  };
+
+  const handleShowFormsClick = () => {
+    setShowForms(!showForms);
   };
 
   return (
@@ -74,88 +80,84 @@ export default function AstronomyDay() {
       <div className="flex justify-center">
         <button
           className="bg-blue-500 text-white p-2 rounded-md"
-          onClick={() => setShowForms(!showForms)}
+          onClick={handleShowFormsClick}
         >
           {showForms ? "Hide Forms" : "Show Forms"}
         </button>
       </div>
 
       {/* Forms Section */}
-{showForms && (
-  <div className="flex flex-wrap justify-center space-x-8">
-    {/* Date Section */}
-    <div className="flex flex-col items-center bg-gray-100 p-6 rounded-lg shadow-md">
-      <h2 className="text-xl font-bold mb-4">Date Section</h2>
-      <form onSubmit={handleDateSubmit}>
-        <div className="flex flex-col items-center space-y-4">
-          <input
-            type="date"
-            value={date}
-            onChange={(e) => setDate(e.target.value)}
-            className="border rounded-md p-2"
-            placeholder="Date"
-          />
-          <button type="submit" className="bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600 transition-colors">
-            Get Image
-          </button>
+      {showForms && (
+        <div className="flex flex-wrap justify-center space-x-8">
+          {/* Date Section */}
+          <div className="flex flex-col items-center bg-white p-6 rounded-lg">
+            <form onSubmit={handleDateSubmit}>
+              <div className="flex flex-col items-center space-y-6 bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+                <b className="text-2xl font-semibold text-gray-700 mb-4">Get an Image by Date</b>
+                <input
+                  type="date"
+                  value={date}
+                  onChange={(e) => setDate(e.target.value)}
+                  className="border border-gray-300 rounded-md p-3 w-full text-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent"
+                  placeholder="Date"
+                />
+                <button type="submit" className="bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600 transition-colors">
+                  Get Image
+                </button>
+              </div>
+            </form>
+          </div>
+
+          {/* Date Range Section */}
+          <div className="flex flex-col items-center bg-white p-6 rounded-lg ">
+            <form onSubmit={handleDateRangeSubmit}>
+              <div className="flex flex-col items-center space-y-6 bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+                <b className="text-2xl font-semibold text-gray-700 mb-4">Get Images by Date Range</b>
+                <label htmlFor="startDate" className="text-gray-500 dark:text-gray-400">Start Date</label>
+                <input
+                  type="date"
+                  id="startDate"
+                  value={startDate}
+                  onChange={(e) => setStartDate(e.target.value)}
+                  className="border border-gray-300 rounded-md p-3 w-full text-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent"
+                />
+                <label htmlFor="endDate" className="text-gray-500 dark:text-gray-400">End Date</label>
+                <input
+                  type="date"
+                  id="endDate"
+                  value={endDate}
+                  onChange={(e) => setEndDate(e.target.value)}
+                  className="border border-gray-300 rounded-md p-3 w-full text-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent"
+                />
+                <button type="submit" className="bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600 transition-colors">
+                  Get Images
+                </button>
+              </div>
+            </form>
+          </div>
+
+          {/* Count Section */}
+          <div className="flex flex-col items-center bg-white p-6 rounded-lg">
+            <form onSubmit={handleCountSubmit}>
+              <div className="flex flex-col items-center space-y-6 bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+                <b className="text-2xl font-semibold text-gray-700 mb-4">Get Images by Count</b>
+                <input
+                  type="number"
+                  value={count}
+                  onChange={(e) => setCount(e.target.value)}
+                  className="border border-gray-300 rounded-md p-3 w-full text-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent"
+                  placeholder="Count"
+                />
+                <button type="submit" className="bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600 transition-colors">
+                  Get Images
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
-      </form>
-    </div>
+      )}
 
-    {/* Date Range Section */}
-    <div className="flex flex-col items-center bg-gray-100 p-6 rounded-lg shadow-md">
-      <h2 className="text-xl font-bold mb-4">Date Range Section</h2>
-      <form onSubmit={handleDateRangeSubmit}>
-        <div className="flex flex-col items-center space-y-4">
-          <label htmlFor="startDate" className="text-gray-500 dark:text-gray-400">Start Date</label>
-          <input
-            type="date"
-            id="startDate"
-            value={startDate}
-            onChange={(e) => setStartDate(e.target.value)}
-            className="border rounded-md p-2"
-          />
-
-          <label htmlFor="endDate" className="text-gray-500 dark:text-gray-400">End Date</label>
-          <input
-            type="date"
-            id="endDate"
-            value={endDate}
-            onChange={(e) => setEndDate(e.target.value)}
-            className="border rounded-md p-2"
-          />
-
-          <button type="submit" className="bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600 transition-colors">
-            Get Images
-          </button>
-        </div>
-      </form>
-    </div>
-
-    {/* Count Section */}
-    <div className="flex flex-col items-center bg-gray-100 p-6 rounded-lg shadow-md">
-      <h2 className="text-xl font-bold mb-4">Count Section</h2>
-      <form onSubmit={handleCountSubmit}>
-        <div className="flex flex-col items-center space-y-4">
-          <input
-            type="number"
-            value={count}
-            onChange={(e) => setCount(e.target.value)}
-            className="border rounded-md p-2"
-            placeholder="Count"
-          />
-          <button type="submit" className="bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600 transition-colors">
-            Get Images
-          </button>
-        </div>
-      </form>
-    </div>
-  </div>
-)}
-
-
-
-     {/* Display Section */}
+      {/* Display Section */}
       {data && (
         <motion.div
           className="flex flex-col space-y-4 px-5 py-8"
@@ -175,7 +177,7 @@ export default function AstronomyDay() {
                   transition={{ duration: 1, delay: 1 }}
                 >
                   {/* Image */}
-                  <div className="flex justify-center bg-black bg-no-repeat bg-cover bg-fixed bg-clip-border bg-origin-padding">
+                  <div className="flex justify-center bg-white bg-no-repeat bg-cover bg-fixed bg-clip-border bg-origin-padding">
                     <img src={item.url} alt={`Astronomy picture of the day ${index}`} className="object-contain h-full" />
                   </div>
 
@@ -201,7 +203,7 @@ export default function AstronomyDay() {
           ) : (
             <div className="grid laptop:grid-cols-2 gap-2 tablet:grid-cols-1 grid-flow-col-2 justify-stretch">
               {/* Image */}
-              <div className="flex justify-center bg-black bg-no-repeat bg-cover bg-fixed bg-clip-border bg-origin-padding">
+              <div className="flex justify-center bg-white bg-no-repeat bg-cover bg-fixed bg-clip-border bg-origin-padding">
                 <img src={data.url} alt={`Astronomy picture of the day`} className="object-contain h-full" />
               </div>
 
@@ -225,8 +227,6 @@ export default function AstronomyDay() {
           )}
         </motion.div>
       )}
-
-
 
       {/* Loading Spinner */}
       {loading && (
