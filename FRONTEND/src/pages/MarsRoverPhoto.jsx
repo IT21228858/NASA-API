@@ -7,11 +7,21 @@ import { motion } from "framer-motion";
 export default function MarsRoverPhoto() {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [camera, setCamera] = useState(""); 
+  const [camera, setCamera] = useState("");
   const [error, setError] = useState(false);
 
-  // Available cameras for Mars Rover
-  const cameras = ["FHAZ", "RHAZ", "MAST", "CHEMCAM", "MAHLI", "MARDI", "NAVCAM", "PANCAM", "MINITES"];
+  // Available cameras for Mars Rover with full and short names
+  const cameras = [
+    { fullName: "Front Hazard Avoidance Camera", shortName: "FHAZ" },
+    { fullName: "Rear Hazard Avoidance Camera", shortName: "RHAZ" },
+    { fullName: "Mast Camera", shortName: "MAST" },
+    { fullName: "Chemistry and Camera Complex", shortName: "CHEMCAM" },
+    { fullName: "Mars Hand Lens Imager", shortName: "MAHLI" },
+    { fullName: "Mars Descent Imager", shortName: "MARDI" },
+    { fullName: "Navigation Camera", shortName: "NAVCAM" },
+    { fullName: "Panoramic Camera", shortName: "PANCAM" },
+    { fullName: "Miniature Thermal Emission Spectrometer (Mini-TES)", shortName: "MINITES" },
+  ];
 
   const fetchAPIDataOFMars = async () => {
     setLoading(true);
@@ -63,7 +73,9 @@ export default function MarsRoverPhoto() {
         >
           <option value="">Select Camera</option>
           {cameras.map((cam) => (
-            <option key={cam} value={cam}>{cam}</option>
+            <option key={cam.shortName} value={cam.shortName}>
+              {cam.fullName} ({cam.shortName})
+            </option>
           ))}
         </select>
         <button type="submit" className="bg-blue-500 text-white p-2 rounded-md">
@@ -82,30 +94,41 @@ export default function MarsRoverPhoto() {
           <Spinner aria-label="Center-aligned spinner example " size="xl" />
         </div>
       ) : (
-        <motion.div
-          className="grid gap-8 laptop:grid-cols-4 tablet:grid-cols-1 grid-flow-col-2 justify-stretch"
-          initial={{ opacity: 0, scale: 0 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.5 }}
-        >
-          {/* Display photos if data is available */}
-          {data?.map((photo) => (
-            <div key={photo.id} className="flex justify-center">
-              <motion.div
-                whileHover={{ scale: 1.1 }}
-                className="max-w-sm"
-              >
-                <Card renderImage={() => (
-                  <img width={500} height={500} src={photo.img_src} alt="Mars Rover photo" />
-                )}>
-                  <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                    {photo.camera.full_name}
-                  </h5>
-                </Card>
-              </motion.div>
-            </div>
-          ))}
-        </motion.div>
+        <>
+          {/* Display alert if no photos are available */}
+{data && data.length === 0 && (
+  <div className="text-center text-red-500 bg-red-100 border border-red-500 p-4 rounded-md">
+    No photos available for the selected camera.
+  </div>
+)}
+
+
+          <motion.div
+            className="grid gap-8 laptop:grid-cols-4 tablet:grid-cols-1 grid-flow-col-2 justify-stretch"
+            initial={{ opacity: 0, scale: 0 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.5 }}
+          >
+            {/* Display photos if data is available */}
+            {data?.map((photo) => (
+  <div key={photo.id} className="flex justify-center">
+    <motion.div whileHover={{ scale: 1.1 }} className="max-w-sm">
+      <Card renderImage={() => (
+        <img width={500} height={500} src={photo.img_src} alt="Mars Rover photo" />
+      )}>
+        <div className="text-center p-4">
+          <h5 className="text-xl font-bold text-gray-900 dark:text-white">
+            {photo.camera.full_name}
+          </h5>
+          <p className="text-gray-600 dark:text-gray-400">Date: {photo.earth_date}</p>
+        </div>
+      </Card>
+    </motion.div>
+  </div>
+))}
+
+          </motion.div>
+        </>
       )}
     </div>
   );
