@@ -23,7 +23,7 @@ export default function Header() {
         console.log(data.message);
       } else {
         dispatch(signoutSuccess());
-        navigate("/sign-in");
+        navigate("/sign-up");
       }
     } catch (error) {
       console.log(error.message);
