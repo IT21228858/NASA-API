@@ -120,7 +120,7 @@ export default function MarsRoverPhoto() {
           <h5 className="text-xl font-bold text-gray-900 dark:text-white">
             {photo.camera.full_name}
           </h5>
-          <p className="text-gray-600 dark:text-gray-400">Date: {photo.earth_date}</p>
+          
         </div>
       </Card>
     </motion.div>
